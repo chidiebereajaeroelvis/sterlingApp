@@ -54,8 +54,8 @@ const SecurityQuestionsForm = () => {
           Set Security Questions
         </h2>
         <p className="text-sm text-gray-500 text-center mb-6">
-          Please select and answer three security questions. You’ll need these
-          if you ever forget your password.
+         It is important you remember your secret questions.
+You will need them if you ever forgot your password.
         </p>
         <form onSubmit={handleSubmit} className="space-y-6">
           {formData.map((item, index) => (
