@@ -1,3 +1,4 @@
-const BASE_URL = "https://sterling-api.vercel.app";
+const BASE_URL = "https://sterling-appi.vercel.app";
 
 export default BASE_URL;
+
