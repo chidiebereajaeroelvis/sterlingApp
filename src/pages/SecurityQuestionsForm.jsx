@@ -57,14 +57,14 @@ const SecurityQuestionsForm = () => {
           Set Security Questions
         </h2>
         <p className="text-sm text-gray-500 text-center mb-6">
-         It is important you remember your secret questions.
-You will need them if you ever forgot your password.
+        Please select and answer three security questions. You’ll need these
+          if you ever forget your password.
         </p>
         <form onSubmit={handleSubmit} className="space-y-6">
           {formData.map((item, index) => (
             <div key={index} className="space-y-2">
               <label className="block text-xs font-semibold text-gray-600 mb-1">
-                Security Question
+                Security Question 1
               </label>
               <div className="relative">
                 <select
@@ -108,7 +108,7 @@ You will need them if you ever forgot your password.
                  {formData.map((item, index) => (
             <div key={index} className="space-y-2">
               <label className="block text-xs font-semibold text-gray-600 mb-1">
-                Security Question
+                Security Question 2
               </label>
               <div className="relative">
                 <select
@@ -152,7 +152,7 @@ You will need them if you ever forgot your password.
                  {formData.map((item, index) => (
             <div key={index} className="space-y-2">
               <label className="block text-xs font-semibold text-gray-600 mb-1">
-                Security Question
+                Security Question 3
               </label>
               <div className="relative">
                 <select
@@ -211,5 +211,6 @@ You will need them if you ever forgot your password.
 };
 
 export default SecurityQuestionsForm;
+
 
 
