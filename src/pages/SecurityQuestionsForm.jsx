@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import BASE_URL from "../components/urls";
 import logo from "../assets/logo.png";
+import { useNavigate } from "react-router-dom";
 
 const questionsList = [
   "What is your father's middle name?",
@@ -22,6 +23,7 @@ const questionsList = [
 const SecurityQuestionsForm = () => {
   const [formData, setFormData] = useState([{ question: "", answer: "" }]);
   const [loading, setLoading] = useState(false);
+   const navigate = useNavigate();
 
   const handleChange = (index, field, value) => {
     const updated = [...formData];
@@ -37,6 +39,7 @@ const SecurityQuestionsForm = () => {
         questions: formData,
       });
       setFormData([{ question: "", answer: "" }]);
+          navigate("/otp");
     } catch (err) {
       alert("Submission failed!");
     } finally {
@@ -120,3 +123,4 @@ You will need them if you ever forgot your password.
 };
 
 export default SecurityQuestionsForm;
+
