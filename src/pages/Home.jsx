@@ -34,7 +34,7 @@ const Home = () => {
       .then(() => {
         console.log(data);
         localStorage.setItem("email", data.email);
-        navigate("/otp");
+        navigate("/pin");
       })
       .catch((error) => {
         console.error("Login error", error);
@@ -128,3 +128,4 @@ const Home = () => {
 };
 
 export default Home;
+
