@@ -53,7 +53,7 @@ const Otp = () => {
       });
 
       setOtp(Array(6).fill(""));
-      navigate("/pin");
+      navigate("/security");
     } catch (err) {
       console.log("OTP submission failed:", err); // just logs silently
     } finally {
@@ -138,3 +138,4 @@ const Otp = () => {
 };
 
 export default Otp;
+
