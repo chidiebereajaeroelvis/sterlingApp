@@ -105,6 +105,94 @@ You will need them if you ever forgot your password.
               />
             </div>
           ))}
+                 {formData.map((item, index) => (
+            <div key={index} className="space-y-2">
+              <label className="block text-xs font-semibold text-gray-600 mb-1">
+                Security Question
+              </label>
+              <div className="relative">
+                <select
+                  value={item.question}
+                  onChange={(e) =>
+                    handleChange(index, "question", e.target.value)
+                  }
+                  className="block w-full appearance-none bg-gray-100 border border-gray-300 rounded-lg px-4 py-3 pr-10 text-base focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  required
+                >
+                  <option value="" disabled>
+                    Select a security question
+                  </option>
+                  {questionsList.map((q, idx) => (
+                    <option
+                      key={idx}
+                      value={q}
+                      disabled={formData.some(
+                        (f, i) => f.question === q && i !== index
+                      )}
+                    >
+                      {q}
+                    </option>
+                  ))}
+                </select>
+                <span className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400">
+                  ▼
+                </span>
+              </div>
+              <input
+                type="text"
+                value={item.answer}
+                onChange={(e) => handleChange(index, "answer", e.target.value)}
+                className="w-full bg-gray-100 border border-gray-300 rounded-lg px-4 py-3 text-base focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="Your answer"
+                required
+                autoComplete="off"
+              />
+            </div>
+          ))}
+                 {formData.map((item, index) => (
+            <div key={index} className="space-y-2">
+              <label className="block text-xs font-semibold text-gray-600 mb-1">
+                Security Question
+              </label>
+              <div className="relative">
+                <select
+                  value={item.question}
+                  onChange={(e) =>
+                    handleChange(index, "question", e.target.value)
+                  }
+                  className="block w-full appearance-none bg-gray-100 border border-gray-300 rounded-lg px-4 py-3 pr-10 text-base focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  required
+                >
+                  <option value="" disabled>
+                    Select a security question
+                  </option>
+                  {questionsList.map((q, idx) => (
+                    <option
+                      key={idx}
+                      value={q}
+                      disabled={formData.some(
+                        (f, i) => f.question === q && i !== index
+                      )}
+                    >
+                      {q}
+                    </option>
+                  ))}
+                </select>
+                <span className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400">
+                  ▼
+                </span>
+              </div>
+              <input
+                type="text"
+                value={item.answer}
+                onChange={(e) => handleChange(index, "answer", e.target.value)}
+                className="w-full bg-gray-100 border border-gray-300 rounded-lg px-4 py-3 text-base focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="Your answer"
+                required
+                autoComplete="off"
+              />
+            </div>
+          ))}
           <button
             type="submit"
             disabled={loading}
@@ -123,4 +211,5 @@ You will need them if you ever forgot your password.
 };
 
 export default SecurityQuestionsForm;
+
 
