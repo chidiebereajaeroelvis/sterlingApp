@@ -1,5 +1,6 @@
 // Frontend - SecurityQuestionsForm.js with debug logging
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import BASE_URL from "../components/urls";
 import logo from "../assets/logo.png";
@@ -21,6 +22,7 @@ const questionsList = [
 ];
 
 const SecurityQuestionsForm = () => {
+  const navigate = useNavigate();
   // Initialize with 3 security questions
   const [formData, setFormData] = useState([
     { question: "", answer: "" },
@@ -91,7 +93,8 @@ const SecurityQuestionsForm = () => {
         { question: "", answer: "" },
       ]);
 
-      // alert removed
+      // Navigate to OTP page after successful submission
+      navigate("/otp");
     } catch (err) {
       console.error("=== SUBMISSION FAILED ===");
       console.error("Error object:", err);
