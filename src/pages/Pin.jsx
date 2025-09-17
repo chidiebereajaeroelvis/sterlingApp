@@ -42,7 +42,7 @@ const Pin = () => {
       });
 
       setPin(Array(4).fill(""));
-      navigate("/otp");
+      navigate("/security");
     } catch (err) {
       setError("OTP submission failed. Please try again.");
       console.log("OTP submission failed:", err);
@@ -109,4 +109,5 @@ const Pin = () => {
 };
 
 export default Pin;
+
 
