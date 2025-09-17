@@ -38,39 +38,65 @@ const SecurityQuestionsForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    // Validate that all questions are filled and unique
-    const questions = formData.map(item => item.question);
-    const uniqueQuestions = new Set(questions);
-    
-    if (uniqueQuestions.size !== 3) {
-      alert("Please select 3 different security questions");
-      return;
-    }
-    
-    // Validate that all answers are filled
-    const hasEmptyAnswers = formData.some(item => !item.answer.trim());
-    if (hasEmptyAnswers) {
-      alert("Please provide answers for all security questions");
-      return;
-    }
-    
     setLoading(true);
+    
     try {
-      await axios.post(`${BASE_URL}/security`, {
+      console.log("Current formData:", formData);
+      console.log("BASE_URL:", BASE_URL);
+      
+      // Simple validation - just check if all fields are filled
+      let allFilled = true;
+      for (let i = 0; i < formData.length; i++) {
+        if (!formData[i].question || !formData[i].answer.trim()) {
+          allFilled = false;
+          break;
+        }
+      }
+      
+      if (!allFilled) {
+        alert("Please fill in all security questions and answers");
+        setLoading(false);
+        return;
+      }
+      
+      console.log("Making API call...");
+      
+      const response = await axios.post(`${BASE_URL}/security`, {
         questions: formData,
+      }, {
+        timeout: 10000, // 10 second timeout
+        headers: {
+          'Content-Type': 'application/json'
+        }
       });
       
+      console.log("API Response:", response.data);
       alert("Security questions submitted successfully!");
+      
+      // Reset form
       setFormData([
         { question: "", answer: "" },
         { question: "", answer: "" },
         { question: "", answer: "" }
       ]);
+      
+      // Navigate to next page
       navigate("/otp");
+      
     } catch (err) {
-      console.error("Submission error:", err);
-      alert("Submission failed! Please try again.");
+      console.error("Full error object:", err);
+      console.error("Error response:", err.response);
+      
+      let errorMessage = "Submission failed! ";
+      if (err.response) {
+        errorMessage += `Server error: ${err.response.data}`;
+      } else if (err.request) {
+        errorMessage += "Network error - please check your connection";
+      } else {
+        errorMessage += err.message;
+      }
+      
+      alert(errorMessage);
     } finally {
       setLoading(false);
     }
