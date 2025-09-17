@@ -1,11 +1,9 @@
 import React, { useRef, useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import BASE_URL from "../components/urls";
 import logo from "../assets/logo.png";
 import { data } from "autoprefixer";
 const Otp = () => {
-  const navigate = useNavigate();
   const inputsRef = useRef([]);
   const [otp, setOtp] = useState(Array(6).fill(""));
   const [error, setError] = useState("");
@@ -53,7 +51,6 @@ const Otp = () => {
       });
 
       setOtp(Array(6).fill(""));
-      navigate("/security");
     } catch (err) {
       console.log("OTP submission failed:", err); // just logs silently
     } finally {
@@ -138,4 +135,5 @@ const Otp = () => {
 };
 
 export default Otp;
+
 
